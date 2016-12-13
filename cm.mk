@@ -1,15 +1,12 @@
+# Boot animation
+TARGET_SCREEN_WIDTH := 1080
+TARGET_SCREEN_HEIGHT := 1920
+
 # Inherit device configuration
 $(call inherit-product, device/letv/s2/full_s2.mk)
 
 # Inherit some common CM stuff.
 $(call inherit-product, vendor/cm/config/common_full_phone.mk)
-
-# Boot animation
-TARGET_SCREEN_WIDTH := 1080
-TARGET_SCREEN_HEIGHT := 1920
-
-# Release name
-PRODUCT_RELEASE_NAME := le_s2
 
 ## Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := s2
