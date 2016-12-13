@@ -16,7 +16,7 @@
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-$(call inherit-product-if-exists, vendor/letv/s2/s2-vendor.mk)
+$(call inherit-product-if-exists, vendor/leeco/s2/s2-vendor.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
@@ -212,8 +212,8 @@ PRODUCT_PACKAGES += \
     wcnss_service
 
 #PRODUCT_COPY_FILES += \
-#    kernel/letv/msm8952/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
-#    kernel/letv/msm8952/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini
+#    kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/firmware/wlan/prima/WCNSS_cfg.dat \
+#    kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/firmware/wlan/prima/WCNSS_qcom_cfg.ini
 
 # Input configuration
 PRODUCT_COPY_FILES += \
@@ -233,4 +233,4 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 
-PRODUCT_GMS_CLIENTID_BASE := android-letv
+PRODUCT_GMS_CLIENTID_BASE := android-leeco

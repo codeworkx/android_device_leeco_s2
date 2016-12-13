@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-LOCAL_PATH := device/letv/s2
+LOCAL_PATH := device/leeco/s2
 
 # Headers
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
@@ -54,7 +54,7 @@ TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
 TARGET_KERNEL_APPEND_DTB := true
 
-TARGET_KERNEL_SOURCE := kernel/letv/msm8952
+TARGET_KERNEL_SOURCE := kernel/leeco/msm8952
 TARGET_KERNEL_CONFIG := cm_s2_defconfig
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
 
@@ -75,10 +75,8 @@ TARGET_USERIMAGES_USE_EXT4 := true
 
 # Init
 TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
-BOARD_NEEDS_VENDORIMAGE_SYMLINK := true
-TARGET_COPY_OUT_VENDOR := system
-TARGET_UNIFIED_DEVICE := true
-TARGET_USES_OVERLAY := true
+TARGET_INIT_VENDOR_LIB := libinit_s2
+TARGET_RECOVERY_DEVICE_MODULES := libinit_s2
 
 # Qualcomm support
 BOARD_USES_QCOM_HARDWARE := true
@@ -93,10 +91,10 @@ HAVE_ADRENO_SOURCE:= false
 OVERRIDE_RS_DRIVER:= libRSDriver_adreno.so
 
 # Audio
-AUDIO_FEATURE_ENABLED_KPI_OPTIMIZE := true
-AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
 BOARD_USES_ALSA_AUDIO := true
 USE_CUSTOM_AUDIO_POLICY := 1
+AUDIO_FEATURE_ENABLED_KPI_OPTIMIZE := true
+AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
 
 # Needed for VoLTE
 AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
@@ -190,4 +188,4 @@ BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/sepolicy
 include device/qcom/sepolicy/sepolicy.mk
 
 # inherit from the proprietary version
--include vendor/letv/s2/BoardConfigVendor.mk
+-include vendor/leeco/s2/BoardConfigVendor.mk

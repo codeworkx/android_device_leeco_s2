@@ -190,6 +190,7 @@ persist.sys.usb.gps.notify=0
 persist.sys.usb.config=diag,serial_tty,serial_smd,adb
 ro.sys.usb.default.config=diag,serial_tty,serial_smd,adb
 #< LAFITE-246 guohongtao 201601011 end>
+
 #property to enable fingerprint
 persist.qfp=false
 

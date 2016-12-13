@@ -4,7 +4,7 @@
     "target_path": "device/qcom/common"
   },
   {
-    "repository": "android_kernel_letv_msm8952",
-    "target_path": "kernel/letv/msm8952"
+    "repository": "android_kernel_leeco_msm8952",
+    "target_path": "kernel/leeco/msm8952"
   }  
 ]
