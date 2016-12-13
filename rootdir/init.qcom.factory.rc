@@ -253,9 +253,6 @@ on mmi
     #              This is FFBM only settings.
     # ========================================================
 
-    #mount sdcard by default
-    mount vfat /dev/block/mmcblk1p1 /storage/sdcard1
-
     #mkdir for factory data files.
     mkdir /cache/FTM_AP 0750 root root
     #sensor settings
