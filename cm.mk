@@ -12,5 +12,8 @@ $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 PRODUCT_DEVICE := s2
 PRODUCT_NAME := cm_s2
 PRODUCT_BRAND := LeEco
-PRODUCT_MODEL := s2
+PRODUCT_MODEL := LeEco Le 2
 PRODUCT_MANUFACTURER := LeMobile
+
+# Release name
+PRODUCT_RELEASE_NAME := s2
