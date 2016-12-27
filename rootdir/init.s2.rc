@@ -104,6 +104,19 @@ on boot
     chmod 666 /sys/class/power_supply/battery/le_quick_charge_mode
 # add by letv end
 
+    chown system system /sys/class/leds/red/blink
+    chown system system /sys/class/leds/green/blink
+    chown system system /sys/class/leds/blue/blink
+
+    # Added by yangyongfeng for torch led-flash control, LAFITE-8164(QL1530) 20160414, begin
+    chown system camera /sys/class/leds/led:torch_0/brightness
+    chmod 0664 /sys/class/leds/led:torch_0/brightness
+    chown system camera /sys/class/leds/led:torch_1/brightness
+    chmod 0664 /sys/class/leds/led:torch_1/brightness
+    chown system camera /sys/class/leds/led:switch/brightness
+    chmod 0664 /sys/class/leds/led:switch/brightness
+    # Added by yangyongfeng for torch led-flash control, LAFITE-8164(QL1530) 20160414, end
+
 /* < LAFITE-707 xiongzu'an 20160119 begin */
 on property:sys.settings.powerlimit=1
    write /sys/class/power_supply/battery/charging_enabled 0
