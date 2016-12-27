@@ -842,11 +842,13 @@ on property:sys.usb.config=ptp,adb
 #< LAFITE-347 guohongtao 2016-01-14 begin>
 #< LAFITE-5875 guohongtao 2016-03-28 begin>
 on property:sys.usb.config=mtp
+    stop adbd
     write /sys/class/android_usb/android0/enable 0
     write /sys/class/android_usb/android0/idVendor 2B0E
-    write /sys/class/android_usb/android0/idProduct 1714
-    write /sys/class/android_usb/android0/functions mtp
+    write /sys/class/android_usb/android0/idProduct 171B
+    write /sys/class/android_usb/android0/functions mtp,adb
     write /sys/class/android_usb/android0/enable 1
+    start adbd
     setprop sys.usb.state ${sys.usb.config}
 
 on property:sys.usb.config=mtp,cdrom
