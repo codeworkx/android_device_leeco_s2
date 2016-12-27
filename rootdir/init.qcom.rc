@@ -26,9 +26,8 @@
 #
 
 import init.s2.rc
-import init.s2.usb.rc
-
 import init.target.rc
+
 import init.qcom.factory.rc
 
 on early-init
@@ -1006,35 +1005,9 @@ on property:sys.dbg.coresight.enable=1
 on property:sys.dbg.coresight.enable=0
     write /persist/coresight/enable 0
 
-service lelogd_start /system/bin/lelogd
-    class late_start
-    disabled
-    user root
-    group root sdcard_rw sdcard_r system
-    oneshot
-service lelogd_stop /system/bin/lelogd -k
-    class late_start
-    disabled
-    user root
-    group root sdcard_rw sdcard_r system
-    oneshot
-
-on property:persist.sys.lelogd=1
-    start lelogd_start
-on property:persist.sys.lelogd=0
-    start lelogd_stop
-
 # bugreport is triggered by developer options
 service bugreport /system/bin/dumpstate -d -p -B \
         -o /data/data/com.android.shell/files/bugreports/bugreport
     class main
-    disabled
-    oneshot
-
-# leeco add leuirecovery
-service leuirecovery /system/bin/leuirecovery
-    class main
-    user root system
-    group root system sdcard_rw media_rw
     disabled
     oneshot

@@ -29,12 +29,8 @@ on init
     write /sys/class/android_usb/android0/f_rndis/wceis 1
     write /sys/class/android_usb/android0/iSerial ${ro.serialno}
 
-/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, begin*/
-#< LAFITE-348 shenxinyu 2016-01-18 begin>
 #on charger
     #setprop persist.sys.usb.config diag,serial_tty,serial_smd,adb
-#< LAFITE-348 shenxinyu 2016-01-18 end>
-/* added by rentianzhi for diag in charger mode, LAFITE-11(QL1530) 20160114, end*/
 
 on fs
     mkdir /dev/usb-ffs 0770 shell shell
@@ -95,6 +91,7 @@ service s2-usb-sh /system/bin/sh /init.s2.usb.sh
 # e.g. rmnet_hsic[,rmnet_hsusb]
 # Only required for transport type hsic, optional for other transport types.
 #< LAFITE-1156 guohongtao 2016-02-04 begin>
+
 # USB compositions
 on property:sys.usb.config=diag,serial_tty,serial_smd
     write /sys/class/android_usb/android0/enable 0

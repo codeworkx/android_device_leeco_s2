@@ -1,3 +1,5 @@
+import init.s2.usb.rc
+
 #used for add oem info
 
 #< LAFITE-33 yuyang 20151221 begin
@@ -168,106 +170,28 @@ on charger_svc
 
 on charger
     setprop debug.charger.on 1
-#LAFITE-33 yuyang 20151221 end >
-#< LAFITE-33 yuyang 20151221 begin
-service  getaplog /system/bin/getlog -c
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
 
-service  stopaplog /system/bin/getlog -s
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
-on property:persist.sys.debug.getaplog=1
-    restart getaplog
-on property:persist.sys.debug.getaplog=0
-    start stopaplog
-
-service  getqxdmlog /system/bin/getlog -q
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
-service  stopqxdmlog /system/bin/getlog -x
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
-on property:persist.sys.debug.getqxdmlog=1
-    restart getqxdmlog
-on property:persist.sys.debug.getqxdmlog=0
-    start stopqxdmlog
-
-service  cpanrlog  /system/bin/sh /system/etc/cpanrlog.sh
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
-service  cptomblog  /system/bin/sh /system/etc/cptomblog.sh
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-service  gettcpdumplog /system/bin/getlog -t
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
-service  stoptcpdumplog /system/bin/getlog -p
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
-service  getpersistlog /system/bin/getpersistlog
-    class main
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-
-on property:persist.sys.debug.gettcpdump=1
-    restart gettcpdumplog
-on property:persist.sys.debug.gettcpdump=0
-    start stoptcpdumplog
-#LAFITE-33 yuyang 20151221 end >
-# < LAFITE-686 yuyang 20160126 begin
-service getalllog /system/bin/sh /system/etc/getalllog.sh
-    disabled
-    user root
-    oneshot
-    seclabel u:r:logoem:s0
-on property:persist.sys.debug.getalllog=1
-    restart getalllog
-on property:persist.sys.debug.getalllog=0
-    stop getalllog
-# LAFITE-686 yuyang 20160126 end >
 #< LAFITE-347 guohongtao 2016-01-14 begin>
 service qcom-serialno-sh /system/bin/sh /init.s2.serialno.sh
     class main
     user root
     oneshot
     disabled
+
 service opendiagcharge /system/bin/sh /init.s2.switch.diag.sh
     class main
     user root
     oneshot
     disabled
-service  openusbdiag /system/bin/sh /init.s2.open.usbdiag.sh
+
+service openusbdiag /system/bin/sh /init.s2.open.usbdiag.sh
     disabled
     user root
     oneshot
+
 on property:persist.sys.usb.open_diag=true
     setprop persist.sys.usb.open_diag false
     start openusbdiag
-#< LAFITE-347 guohongtao 2016-01-14 end>
 
 #huanghaining 2016-03-25 add for ntfs begin
     #load ufsd modules
@@ -473,5 +397,5 @@ on property:service.tinyproxy.enable=1
     start tinyproxy
 
 # Used to set USB configuration at boot and to switch the configuration
-on property:sys.boot_completed=1 && property:persist.sys.usb.debug_functions=*
-    setprop sys.usb.config ${persist.sys.usb.debug_functions}
+#on property:sys.boot_completed=1 && property:persist.sys.usb.debug_functions=*
+#    setprop sys.usb.config ${persist.sys.usb.debug_functions}

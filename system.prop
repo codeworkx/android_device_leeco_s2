@@ -186,10 +186,10 @@ vidc.enc.narrow.searchrange=1
 #< LAFITE-15942 guohongtao 20160701 begin>
 persist.sys.usb.gps.notify=0
 #< LAFITE-15942 guohongtao 20160701 end>
-#< LAFITE-246 guohongtao 201601011 begin>
-persist.sys.usb.config=diag,serial_tty,serial_smd,adb
-ro.sys.usb.default.config=diag,serial_tty,serial_smd,adb
-#< LAFITE-246 guohongtao 201601011 end>
+
+# codeworkx: disabled
+#persist.sys.usb.config=diag,serial_tty,serial_smd,adb
+#ro.sys.usb.default.config=diag,serial_tty,serial_smd,adb
 
 #property to enable fingerprint
 persist.qfp=false
