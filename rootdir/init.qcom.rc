@@ -109,15 +109,12 @@ on boot
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
     setprop net.tcp.buffersize.wifi    524288,2097152,4194304,262144,524288,1048576
 
-
     setprop ro.telephony.call_ring.multiple false
 
     #Remove SUID bit for iproute2 ip tool
     chmod 0755 /system/bin/ip
 
-
     chmod 0444 /sys/devices/platform/msm_hsusb/gadget/usb_state
-
 
 #   Define TCP buffer sizes for various networks
 #   ReadMin, ReadInitial, ReadMax, WriteMin, WriteInitial, WriteMax,
@@ -319,7 +316,7 @@ service ssr_setup /system/bin/ssr_setup
 service ss_ramdump /system/bin/subsystem_ramdump
     class main
     user system
-    group system
+    group log sdcard_rw sdcard_r diag
     disabled
 
 on property:persist.sys.ssr.restart_level=*
@@ -395,7 +392,6 @@ on property:vold.decrypt=trigger_restart_framework
     start qcom-c_main-sh
     start config_bluetooth
     start wcnss-service
-    start leuirecovery
 
 on property:persist.env.fastdorm.enabled=true
     setprop persist.radio.data_no_toggle 1
@@ -527,24 +523,22 @@ service qmuxd /system/bin/qmuxd
     class main
     user root
     group radio audio bluetooth gps nfc qcom_diag
-    disabled
 
 service netmgrd /system/bin/netmgrd
     class main
-    disabled
+    user root
+    group radio
 
 service ipacm-diag /system/bin/ipacm-diag
     class main
     user system
     socket ipacm_log_file dgram 660 system net_admin
     group net_admin qcom_diag
-    disabled
 
 service ipacm /system/bin/ipacm
     class main
     user net_admin
     group net_admin inet
-    disabled
 
 service qti /system/vendor/bin/qti
     class main
@@ -625,7 +619,7 @@ service wpa_supplicant /system/bin/wpa_supplicant \
     disabled
     oneshot
 
-service dhcpcd_wlan0 /system/bin/dhcpcd -aABDKL
+service dhcpcd_wlan0 /system/bin/dhcpcd -ABKLG
     class late_start
     disabled
     oneshot
@@ -690,6 +684,7 @@ service ptt_socket_app /system/bin/ptt_socket_app -d
     group root
     oneshot
     disabled
+
 #LAFITE-403:yuquan added end @2016-01-06:disable ptt_socket_app at bootup.
 service ptt_ffbm /system/bin/ptt_socket_app -f -d
     user root
@@ -845,6 +840,14 @@ service battery_monitor /system/bin/battery_monitor
     user system
     group system
     disabled
+
+service_redefine ril-daemon /system/bin/rild
+    class main
+    socket rild stream 660 root radio
+    socket sap_uim_socket1 stream 660 bluetooth bluetooth
+    socket rild-debug stream 660 radio system
+    user root
+    group radio cache inet misc audio log qcom_diag diag net_raw
 
 service ril-daemon2 /system/bin/rild -c 2
     class main

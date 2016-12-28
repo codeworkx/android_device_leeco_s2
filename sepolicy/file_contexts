@@ -1,0 +1,4 @@
+/system/bin/yep_qmi_server          u:object_r:yep_qmi_server_exec:s0
+/system/bin/yepdiag                 u:object_r:yepdiag_exec:s0
+
+
