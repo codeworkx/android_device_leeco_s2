@@ -8,7 +8,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	rild.libargs=-d /dev/smd0 \
 	ro.telephony.default_network=9 \
 	telephony.lteOnCdmaDevice=0 \
-	telephony.lteOnGsmDevice=1
+	telephony.lteOnGsmDevice=1 \
+	persist.radio.multisim.config=dsds
 
 # Factory Reset Protection
 PRODUCT_PROPERTY_OVERRIDES += \
