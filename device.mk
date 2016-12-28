@@ -165,6 +165,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     gps.msm8952
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/flp.conf:system/etc/configs/flp.conf \
+    $(LOCAL_PATH)/configs/gps.conf:system/etc/configs/gps.conf
+
 # Media
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media_codecs.xml:system/etc/media_codecs.xml \
