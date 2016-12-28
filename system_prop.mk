@@ -16,6 +16,26 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	persist.radio.rat_on=combine \
 	persist.radio.mt_sms_ack=20
 
+# NITZ
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.rild.nitz_plmn="" \
+    persist.rild.nitz_long_ons_0="" \
+    persist.rild.nitz_long_ons_1="" \
+    persist.rild.nitz_long_ons_2="" \
+    persist.rild.nitz_long_ons_3="" \
+    persist.rild.nitz_short_ons_0="" \
+    persist.rild.nitz_short_ons_1="" \
+    persist.rild.nitz_short_ons_2="" \
+	persist.rild.nitz_short_ons_3=""
+
 # Factory Reset Protection
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.frp.pst=/dev/block/bootdevice/by-name/config
+
+# system prop for opengles version
+# 196609 is decimal for 0x30001 to report major/minor versions as 3/1
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.opengles.version=196609 \
+	sys.sf.lcd_density=420
+
+
