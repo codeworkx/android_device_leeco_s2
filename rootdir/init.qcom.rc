@@ -37,6 +37,7 @@ on early-init
 
 on init
     start qfintverify
+
     # Set permissions for persist partition
     mkdir /persist 0771 system system
 
