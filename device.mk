@@ -77,11 +77,11 @@ PRODUCT_PACKAGES += \
     libtinyalsa \
     libtinycompress \
     libtinyxml \
-	tinymix
+    tinymix
 
 # Audio
 PRODUCT_PACKAGES += \
-	audio.primary.msm8952
+    audio.primary.msm8952
 
 PRODUCT_COPY_FILES +=  \
     $(LOCAL_PATH)/audio/aanc_tuning_mixer.txt:system/etc/aanc_tuning_mixer.txt \
@@ -113,7 +113,7 @@ PRODUCT_PACKAGES += \
     libantradio
 
 PRODUCT_COPY_FILES += \
-	external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:system/etc/permissions/com.dsi.ant.antradio_library.xml
+    external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:system/etc/permissions/com.dsi.ant.antradio_library.xml
 
 # Browser
 PRODUCT_PACKAGES += \
@@ -121,7 +121,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-	camera.msm8952 \
+    camera.msm8952 \
     Snap
 
 # CMActions
@@ -138,18 +138,18 @@ PRODUCT_PACKAGES += \
 # system prop for opengles version
 # 196609 is decimal for 0x30001 to report major/minor versions as 3/1
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.opengles.version=196609 \
-	sys.sf.lcd_density=420
+    ro.opengles.version=196609 \
+    sys.sf.lcd_density=420
 
 # Ebtables
 PRODUCT_PACKAGES += \
     ebtables \
     ethertypes \
-	libebtc
+    libebtc
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-	fingerprintd
+    fingerprintd
 
 # IRQ
 PRODUCT_COPY_FILES += \
@@ -214,7 +214,7 @@ PRODUCT_PACKAGES += \
 
 # Ramdisk
 PRODUCT_COPY_FILES += \
-	$(call find-copy-subdir-files,*,${LOCAL_PATH}/rootdir,root)
+    $(call find-copy-subdir-files,*,${LOCAL_PATH}/rootdir,root)
 
 # RIL
 PRODUCT_PACKAGES += \
@@ -249,7 +249,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     p2p_supplicant_overlay.conf \
-	wpa_supplicant_overlay.conf
+    wpa_supplicant_overlay.conf
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/wifi/hostapd.accept:system/etc/hostapd/hostapd.accept \
@@ -266,8 +266,8 @@ PRODUCT_PACKAGES += \
     wcnss_service
 
 PRODUCT_COPY_FILES += \
-	kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
-	kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
+    kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_cfg.dat:system/etc/wifi/WCNSS_cfg.dat \
+    kernel/leeco/msm8952/drivers/staging/prima/firmware_bin/WCNSS_qcom_cfg.ini:system/etc/wifi/WCNSS_qcom_cfg.ini
 
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.disableWifiApFirmwareReload=true
@@ -299,7 +299,7 @@ PRODUCT_CHARACTERISTICS := nosdcard
 
 # Set default USB interface
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-	persist.sys.usb.config=mtp
+    persist.sys.usb.config=mtp
 
 ifeq ($(TARGET_BUILD_VARIANT),eng)
 # Disable ADB authentication
