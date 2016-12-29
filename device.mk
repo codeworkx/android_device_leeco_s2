@@ -134,6 +134,12 @@ PRODUCT_PACKAGES += \
     hwcomposer.msm8952 \
     memtrack.msm8952
 
+# system prop for opengles version
+# 196609 is decimal for 0x30001 to report major/minor versions as 3/1
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.opengles.version=196609 \
+	sys.sf.lcd_density=420
+
 # Ebtables
 PRODUCT_PACKAGES += \
     ebtables \
