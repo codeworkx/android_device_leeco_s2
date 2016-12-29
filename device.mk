@@ -222,7 +222,8 @@ PRODUCT_PACKAGES += \
     librmnetctl \
     libxml2 \
     libqsap_sdk \
-    telephony-ext
+    telephony-ext \
+    libminui
 
 PRODUCT_BOOT_JARS += \
     telephony-ext
