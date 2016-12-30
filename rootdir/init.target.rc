@@ -109,25 +109,10 @@ service qrngd /system/bin/qrngd -f
    user root
    group root
 
-service qrngp /system/bin/qrngp -f
-   class main
-   user root
-   group root
-   oneshot
-   disabled
-
-on property:sys.boot_completed=1
-   start qrngp
-
 service qseecomd /system/bin/qseecomd
    class core
    user root
    group root
-
-#service aostlmd /system/bin/aostlmd
-#   class late_start
-#   user system
-#   group system net_raw
 
 service perfd /system/vendor/bin/perfd
    class main

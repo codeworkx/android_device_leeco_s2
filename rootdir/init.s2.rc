@@ -256,6 +256,7 @@ service br-init /system/bin/bootrecorder -init
     seclabel u:r:recorder:s0
     disabled
     oneshot
+
 # servicemanager
 service br-sm /system/bin/bootrecorder -servicemanager
     user root
@@ -263,6 +264,7 @@ service br-sm /system/bin/bootrecorder -servicemanager
     seclabel u:r:recorder:s0
     disabled
     oneshot
+
 # zygote
 service br-z /system/bin/bootrecorder -zygote
     user root
@@ -284,6 +286,7 @@ service br-sf /system/bin/bootrecorder -surfaceflinger
     seclabel u:r:recorder:s0
     disabled
     oneshot
+
 # LAFITE-183 sunyaxi 20151225 end >
 # < LAFITE-270 chaofubang 20160108 begin
 service audio_test /system/bin/sh /system/bin/AudioLoopback.sh
@@ -310,18 +313,7 @@ on property:sys.audio.earpiece=1
 on property:sys.audio.earpiece=2
     start low_up_sar
 # < LAFITE-14356 chaofubang 20160616 end
-# LAFITE-11163 zhuyan 20160513 end (1/2) >
 
-# < LAFITE-417 pangpingping 20160113 begin
-service deviceinfoserv /system/bin/deviceinfoserv
-    class main
-    user root
-    oneshot
-    disabled
-
-on property:debug.device.server=1
-    start deviceinfoserv
-# < LAFITE-417 pangpingping 20160113 end
 
 # < LAFITE-369 jiangjie 2016-01-11 begin
 service fingerprintd /system/bin/fingerprintd
@@ -333,31 +325,8 @@ service gx_fpd /system/bin/gx_fpd
     class late_start
     user root
     group root system
+    seclabel u:r:goodix:s0
 # LAFITE-786 jiangjie 20160121 end >
-
-#< LAFITE-369 jiangjie 20160123 begin
-service alipayd /system/bin/alipayd
-    class late_start
-    user root
-    group root system
-    seclabel u:r:alipay:s0
-# LAFITE-369 jiangjie 20160123 end >
-
-# LAFITE-369 jiangjie 2016-01-11 end >
-
-# < LAFITE-196 yanwenlong 2016-1-20 begin
-service rootcheck_ser /system/bin/rootcheck_ser
-    class main
-    user root
-    oneshot
-    seclabel u:r:rootcheck_ser:s0
-# LAFITE-196 yanwenlong 2016-1-20 end >
-
-# < LAFITE-5695 yanwenlong 2016-3-23 begin
-service set_pro_model /system/bin/sh /system/bin/product_model.sh
-    class main
-    user root
-    oneshot
 
 #boot start fidoca daemon
 service fidoca /system/vendor/bin/fidoca
