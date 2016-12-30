@@ -37,6 +37,15 @@
 
 #include <hardware/audio_amplifier.h>
 
+#define TFA_I2CSLAVEBASE        0x34
+
+#ifndef I2C_SLAVE
+#define I2C_SLAVE	0x0703	/* dummy address for building API	*/
+#endif
+
+int smartpa_fd = 0;
+int tfa98xxI2cSlave = TFA_I2CSLAVEBASE;
+
 typedef struct tfa9890_device {
     amplifier_device_t amp_dev;
     void *lib_ptr;
@@ -95,6 +104,10 @@ static int amp_dev_close(hw_device_t *device) {
         dlclose(tfa9890->lib_ptr);
         free(tfa9890);
     }
+    
+    if (smartpa_fd) {
+        close(smartpa_fd);
+    }
 
     return 0;
 }
@@ -102,6 +115,18 @@ static int amp_dev_close(hw_device_t *device) {
 static int amp_init(tfa9890_device_t *tfa9890) {
 
     ALOGD("%s\n", __func__);
+    
+    /*
+    smartpa_fd = open("/dev/i2c_smartpa", O_RDWR);
+    if (!smartpa_fd) {
+        ALOGE("%s: Failed to open /dev/i2c_smartpa", __func__);
+        return -EINVAL;
+    } else {
+        ALOGE("%s: Open /dev/i2c_smartpa success (%d)", __func__, smartpa_fd);
+    }
+
+    int res = ioctl(smartpa_fd, I2C_SLAVE, tfa98xxI2cSlave);
+    */
 
     tfa9890->calibration();
 

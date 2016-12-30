@@ -307,6 +307,11 @@
 		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
     </path>
 
+    <!-- for use with leeco audio hal -->
+	<path name="deep-buffer-playback-speaker smartpa">
+		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+    </path>
+
     <path name="deep-buffer-playback bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia1" value="1" />
     </path>
@@ -338,6 +343,11 @@
     </path>
 
 	<path name="low-latency-playback smartpa">
+		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
+	</path>
+
+    <!-- for use with leeco audio hal -->
+	<path name="low-latency-playback-speaker smartpa">
 		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
 	</path>
 
