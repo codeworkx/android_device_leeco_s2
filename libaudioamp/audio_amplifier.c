@@ -72,6 +72,8 @@ static int is_voice_speaker(uint32_t snd_device) {
 static int amp_enable_output_devices(hw_device_t *device, uint32_t devices, bool enable) {
     tfa9890_device_t *tfa9890 = (tfa9890_device_t*) device;
 
+    ALOGD("%s\n", __func__);
+
     if (is_speaker(devices)) {
         if (enable) {
             ALOGD("%s: speaker amp on\n", __func__);
