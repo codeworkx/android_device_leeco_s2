@@ -303,16 +303,9 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia1" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
-    <path name="deep-buffer-playback-speaker">
-	    <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+	<path name="deep-buffer-playback smartpa">
+		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
     </path>
-
-    <path name="deep-buffer-playback-force-speaker">
-	    <path name="deep-buffer-playback-speaker" />
-	    <path name="deep-buffer-playback" />
-    </path>
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
 
     <path name="deep-buffer-playback bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia1" value="1" />
@@ -344,20 +337,9 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia5" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
-    <!-- < LAFITE-1551 chaofubang 20160219 begin-->
-    <path name="low-latency-playback-speaker">
-        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
-    </path>
-    <!--LAFITE-1551 chaofubang 20160219 end-->
-
-    <!--LAFITE-1462 zhuyan 20160205 begin-->
-    <path name="low-latency-playback-force-speaker">
-        <path name="low-latency-playback" />
-        <path name="low-latency-playback-speaker" />
-    </path>
-    <!--LAFITE-1462 zhuyan 20160205 end-->
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
+	<path name="low-latency-playback smartpa">
+		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
+	</path>
 
     <path name="low-latency-playback speaker-protected">
         <path name="low-latency-playback" />
@@ -1086,14 +1068,12 @@
         <ctl name="ADC2 MUX" value="INP3" />
     </path>
 
-    <path name="speaker">
-        <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
-        <!-- ctl name="RX3 MIX1 INP1" value="RX1" / -->
-        <!-- ctl name="SPK" value="Switch" / -->
-        <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
-        <!-- < LAFITE-609 lichuangchuang 20160116 begin -->
+    <path name="smartpa">
         <ctl name="Smart PA I2S" value="ENABLE" />
-        <!-- LAFITE-609 lichuangchuang 20160116 end > -->
+    </path>
+
+    <path name="speaker">
+        <ctl name="Smart PA I2S" value="ENABLE" />
     </path>
 
     <!-- < LAFITE-1551 chaofubang 20160219 begin-->
@@ -1101,12 +1081,6 @@
         <path name="speaker" />
     </path>
     <!--LAFITE-1551 chaofubang 20160219 end-->
-
-    <!-- < LAFITE-609 lichuangchuang 20160116 begin -->
-    <path name="SmartPA_I2S">
-        <ctl name="Smart PA I2S" value="ENABLE" />
-    </path>
-    <!-- LAFITE-609 lichuangchuang 20160116 end > -->
 
     <!-- < LAFITE-5621 lichuangchuang 20160324 begin -->
     <path name="Super-Voice-WakeLock">
