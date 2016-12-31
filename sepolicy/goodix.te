@@ -3,4 +3,7 @@ type goodix_exec, exec_type, file_type;
 
 init_daemon_domain(goodix)
 
-allow fidoca goodix:chr_file { rw_file_perms };
+allow goodix self:capability { dac_override };
+allow goodix tee_device:chr_file { rw_file_perms };
+allow goodix fingerprint_device:chr_file { rw_file_perms };
+allow goodix goodix_service:service_manager { add };

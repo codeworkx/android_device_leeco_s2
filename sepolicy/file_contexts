@@ -4,6 +4,7 @@
 /system/vendor/bin/fidoca           u:object_r:fidoca_exec:s0
 
 /system/bin/gx_fpd                  u:object_r:goodix_exec:s0
+/dev/goodix_fp                      u:object_r:fingerprint_device:s0
 
 /dev/i2c_smartpa                    u:object_r:smartpa_device:s0
 
