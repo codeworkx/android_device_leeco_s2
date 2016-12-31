@@ -19,11 +19,12 @@ include $(CLEAR_VARS)
 LOCAL_C_INCLUDES += \
     $(call project-path-for,qcom-audio)/hal/ \
     $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include \
+    external/tinyalsa/include \
     hardware/libhardware/include
 
 LOCAL_ADDITIONAL_DEPENDENCIES += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
 
-LOCAL_SHARED_LIBRARIES := liblog libutils libcutils libdl libtfa9890
+LOCAL_SHARED_LIBRARIES := liblog libutils libcutils libtfa9890 libtinyalsa
 
 LOCAL_SRC_FILES := audio_amplifier.c
 

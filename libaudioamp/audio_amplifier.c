@@ -17,7 +17,6 @@
 
 #include <time.h>
 #include <system/audio.h>
-
 #include <voice.h>
 #include <msm8916/platform.h>
 
@@ -25,38 +24,40 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <errno.h>
 #include <ctype.h>
-#include <dlfcn.h>
-#include <sys/ioctl.h>
 
 #define LOG_NDEBUG 0
 #define LOG_TAG "AudioAmp-tfa9890"
 #include <log/log.h>
 
 #include <hardware/audio_amplifier.h>
+#include <tinyalsa/asoundlib.h>
 
-#define TFA_I2CSLAVEBASE        0x34
+extern int exTfa98xx_calibration(void);
+extern int exTfa98xx_speakeron(uint32_t);
+extern int exTfa98xx_speakeroff();
 
-#ifndef I2C_SLAVE
-#define I2C_SLAVE	0x0703	/* dummy address for building API	*/
-#endif
+#define AMP_MIXER_CTL "Smart PA I2S"
 
-int smartpa_fd = 0;
-int tfa98xxI2cSlave = TFA_I2CSLAVEBASE;
+typedef enum {
+    SMART_PA_FOR_AUDIO = 0,
+    SMART_PA_FOR_MUSIC = 0,
+    SMART_PA_FOR_VOIP = 1,
+    SMART_PA_FIND = 1,          /* ??? */
+    SMART_PA_FOR_VOICE = 2,
+    SMART_PA_MMI = 3,           /* ??? */
+} smart_pa_mode_t;
 
 typedef struct tfa9890_device {
     amplifier_device_t amp_dev;
-    void *lib_ptr;
-    void (*speakeron)();
-    void (*calibration)();
-    void (*speakeroff)();
+    audio_mode_t mode;
 } tfa9890_device_t;
 
 static tfa9890_device_t *tfa9890_dev = NULL;
 
-static int is_speaker(uint32_t snd_device) {
+static int is_speaker(uint32_t snd_device) 
+{
     int speaker = 0;
 
     switch (snd_device) {
@@ -74,61 +75,113 @@ static int is_speaker(uint32_t snd_device) {
     return speaker;
 }
 
-static int is_voice_speaker(uint32_t snd_device) {
+static int is_voice_speaker(uint32_t snd_device) 
+{
     return snd_device == SND_DEVICE_OUT_VOICE_SPEAKER;
 }
 
-static int amp_enable_output_devices(hw_device_t *device, uint32_t devices, bool enable) {
+static int set_clocks_enabled(bool enable)
+{
+    enum mixer_ctl_type type;
+    struct mixer_ctl *ctl;
+    struct mixer *mixer = mixer_open(0);
+
+    if (mixer == NULL) {
+        ALOGE("%s: Error opening mixer 0'", __func__);
+        return -1;
+    }
+
+    ctl = mixer_get_ctl_by_name(mixer, AMP_MIXER_CTL);
+    if (ctl == NULL) {
+        mixer_close(mixer);
+        ALOGE("%s: Could not find %s\n", __func__, AMP_MIXER_CTL);
+        return -ENODEV;
+    }
+
+    type = mixer_ctl_get_type(ctl);
+    if (type != MIXER_CTL_TYPE_ENUM) {
+        ALOGE("%s: %s is not supported\n", __func__, AMP_MIXER_CTL);
+        mixer_close(mixer);
+        return -ENOTTY;
+    }
+
+    mixer_ctl_set_value(ctl, 0, enable);
+    mixer_close(mixer);
+    return 0;
+}
+
+static int amp_set_mode(struct amplifier_device *device, audio_mode_t mode)
+{
+    int ret = 0;
     tfa9890_device_t *tfa9890 = (tfa9890_device_t*) device;
 
-    ALOGD("%s\n", __func__);
+    tfa9890->mode = mode;
+    return ret;
+}
+
+static int amp_enable_output_devices(hw_device_t *device, uint32_t devices, bool enable) 
+{
+    tfa9890_device_t *tfa9890 = (tfa9890_device_t*) device;
+    int ret = 0;
 
     if (is_speaker(devices)) {
+
         if (enable) {
-            ALOGD("%s: speaker amp on\n", __func__);
-            tfa9890->speakeron();
+            smart_pa_mode_t mode;
+
+            switch(tfa9890->mode) {
+                case AUDIO_MODE_IN_CALL: 
+                    mode = SMART_PA_FOR_VOICE;
+                    break;
+                case AUDIO_MODE_IN_COMMUNICATION: 
+                    mode = SMART_PA_FOR_VOIP;
+                    break;
+                default: 
+                    mode = SMART_PA_FOR_AUDIO;
+            }
+
+            set_clocks_enabled(true);
+
+            if ((ret = exTfa98xx_speakeron(mode)) != 0) {
+                ALOGE("%s: exTfa98xx_speakeron(%d) failed: %d\n", __func__, mode, ret);
+            } else {
+                ALOGD("%s: Amplifier on\n", __func__);
+            }
+
         } else {
-            ALOGD("%s: speaker amp off\n", __func__);
-            tfa9890->speakeroff();
+
+            if ((ret = exTfa98xx_speakeroff()) != 0) {
+                ALOGE("%s: exTfa98xx_speakeroff failed: %d\n", __func__, ret);
+            } else {
+                ALOGD("%s: Amplifier off\n", __func__);
+            }
+
+            set_clocks_enabled(false);
         }
+
     }
     return 0;
 }
 
-static int amp_dev_close(hw_device_t *device) {
+static int amp_dev_close(hw_device_t *device) 
+{
     tfa9890_device_t *tfa9890 = (tfa9890_device_t*) device;
-
-    ALOGD("%s\n", __func__);
-
-    if (tfa9890) {
-        dlclose(tfa9890->lib_ptr);
-        free(tfa9890);
-    }
-    
-    if (smartpa_fd) {
-        close(smartpa_fd);
-    }
+    free(tfa9890);
 
     return 0;
 }
 
-static int amp_init(tfa9890_device_t *tfa9890) {
+static int amp_init(tfa9890_device_t *tfa9890) 
+{   
+    int ret = 0;
 
-    ALOGD("%s\n", __func__);
-    
-    /*
-    smartpa_fd = open("/dev/i2c_smartpa", O_RDWR);
-    if (!smartpa_fd) {
-        ALOGE("%s: Failed to open /dev/i2c_smartpa", __func__);
-        return -EINVAL;
+    set_clocks_enabled(true);
+    if ((ret = exTfa98xx_calibration()) != 0) {
+        ALOGE("%s: exTfa98xx_calibration failed: %d\n", __func__, ret);
     } else {
-        ALOGE("%s: Open /dev/i2c_smartpa success (%d)", __func__, smartpa_fd);
+        ALOGD("%s: Amplifier calibrated\n", __func__);
     }
-
-    int res = ioctl(smartpa_fd, I2C_SLAVE, tfa98xxI2cSlave);
-    */
-
-    tfa9890->calibration();
+    set_clocks_enabled(false);
 
     return 0;
 }
@@ -136,7 +189,6 @@ static int amp_init(tfa9890_device_t *tfa9890) {
 static int amp_module_open(const hw_module_t *module,
         __attribute__((unused)) const char *name, hw_device_t **device)
 {
-    ALOGD("%s\n", __func__);
     
     if (tfa9890_dev) {
         ALOGE("%s:%d: Unable to open second instance of TFA9890 amplifier\n",
@@ -157,34 +209,9 @@ static int amp_module_open(const hw_module_t *module,
     tfa9890_dev->amp_dev.common.close = amp_dev_close;
 
     tfa9890_dev->amp_dev.enable_output_devices = amp_enable_output_devices;
-
-    tfa9890_dev->lib_ptr = dlopen("libtfa9890.so", RTLD_NOW);
-    if (!tfa9890_dev->lib_ptr) {
-        ALOGE("%s:%d: Unable to open libtfa9890.so: %s",
-                __func__, __LINE__, dlerror());
-        free(tfa9890_dev);
-        return -ENODEV;
-    }
-
-    *(void **)&tfa9890_dev->speakeron = dlsym(tfa9890_dev->lib_ptr, "exTfa98xx_speakeron");
-    *(void **)&tfa9890_dev->calibration = dlsym(tfa9890_dev->lib_ptr, "exTfa98xx_calibration");
-    *(void **)&tfa9890_dev->speakeroff = dlsym(tfa9890_dev->lib_ptr, "exTfa98xx_speakeroff");
-    
-    /*
-        exTfa98xx_LR_Switch
-        exTfa98xx_setvolumestep
-        exTfa98xx_getImped25
-     */
-    
-    if (!tfa9890_dev->speakeron || !tfa9890_dev->calibration || !tfa9890_dev->speakeroff) {
-        ALOGE("%s:%d: Unable to find required symbols", __func__, __LINE__);
-        dlclose(tfa9890_dev->lib_ptr);
-        free(tfa9890_dev);
-        return -ENODEV;
-    }
+    tfa9890_dev->amp_dev.set_mode = amp_set_mode;
 
     if (amp_init(tfa9890_dev)) {
-        dlclose(tfa9890_dev->lib_ptr);
         free(tfa9890_dev);
         return -ENODEV;
     }
@@ -204,7 +231,7 @@ amplifier_module_t HAL_MODULE_INFO_SYM = {
         .module_api_version = AMPLIFIER_MODULE_API_VERSION_0_1,
         .hal_api_version = HARDWARE_HAL_API_VERSION,
         .id = AMPLIFIER_HARDWARE_MODULE_ID,
-        .name = "S2 amplifier HAL",
+        .name = "S2 audio amplifier HAL",
         .author = "The LineageOS Project",
         .methods = &hal_module_methods,
     },
