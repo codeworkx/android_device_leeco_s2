@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2017 The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -57,7 +58,7 @@ static int consumerir_transmit(struct consumerir_device *dev,
     buffer[strlen - 1] = 0;
 
     ALOGE("%s", __func__);
-    write(fd, buffer, strlen - 1);
+    //write(fd, buffer, strlen - 1);
 
     return 0;
 }

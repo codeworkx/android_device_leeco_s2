@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2016, The CyanogenMod Project
+ * Copyright (C) 2017, The LineageOS Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -61,8 +62,8 @@ camera_module_t HAL_MODULE_INFO_SYM = {
          .module_api_version = CAMERA_MODULE_API_VERSION_1_0,
          .hal_api_version = HARDWARE_HAL_API_VERSION,
          .id = CAMERA_HARDWARE_MODULE_ID,
-         .name = "Camera Wrapper",
-         .author = "The CyanogenMod Project",
+         .name = "S2 Camera Wrapper",
+         .author = "The LineageOS Project",
          .methods = &camera_module_methods,
          .dso = NULL, /* remove compilation warnings */
          .reserved = {0}, /* remove compilation warnings */
