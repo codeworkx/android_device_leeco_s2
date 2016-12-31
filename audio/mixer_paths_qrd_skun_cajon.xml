@@ -647,7 +647,7 @@
         <ctl name="PRI_MI2S_RX Port Mixer INTERNAL_FM_TX" value="1" />
     </path>
 
-    <path name="play-fm speaker">
+    <path name="play-fm smartpa">
         <ctl name="Internal FM RX Volume" value="1" />
         <ctl name="QUIN_MI2S_RX Port Mixer INTERNAL_FM_TX" value="1" />
         <ctl name="QUIN_MI2S_RX_DL_HL Switch" value="1" />
@@ -655,7 +655,7 @@
 
     <!-- for use with leeco audio hal -->
     <path name="play-fm-speaker">
-        <path name="play-fm speaker" />
+        <path name="play-fm smartpa" />
     </path>
 
     <path name="vowlan-call">
@@ -663,14 +663,14 @@
         <ctl name="VoWLAN_Tx Mixer TERT_MI2S_TX_VoWLAN" value="1" />
     </path>
 
-    <path name="vowlan-call speaker">
+    <path name="vowlan-call smartpa">
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoWLAN" value="1" />
         <ctl name="VoWLAN_Tx Mixer TERT_MI2S_TX_VoWLAN" value="1" />
     </path>
 
     <!-- for use with leeco audio hal -->
     <path name="vowlan-call-speaker">
-        <path name="vowlan-call speaker" />
+        <path name="vowlan-call smartpa" />
     </path>
 
     <path name="vowlan-call hdmi">
