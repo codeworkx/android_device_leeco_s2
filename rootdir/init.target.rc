@@ -29,6 +29,9 @@
 
 import init.carrier.rc
 
+on init
+    export LD_SHIM_LIBS /system/vendor/lib64/lib-imsdpl.so|libshim_boringssl.so
+
 on early-init
     mkdir /firmware 0771 system system
     mkdir /system 0777 root root
