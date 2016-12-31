@@ -309,7 +309,7 @@
 
     <!-- for use with leeco audio hal -->
 	<path name="deep-buffer-playback-speaker smartpa">
-		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia1" value="1" />
+		<path name="deep-buffer-playback smartpa" />
     </path>
 
     <path name="deep-buffer-playback bt-sco">
@@ -348,7 +348,7 @@
 
     <!-- for use with leeco audio hal -->
 	<path name="low-latency-playback-speaker smartpa">
-		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia5" value="1" />
+		<path name="low-latency-playback smartpa" />
 	</path>
 
     <path name="low-latency-playback speaker-protected">
@@ -385,11 +385,14 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia3" value="1" />
     </path>
 
-    <!-- < LAFITE-1080 chaofubang 20160202 begin-->
-    <path name="audio-ull-playback-speaker">
-        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia3" value="1" />
+	<path name="audio-ull-playback smartpa">
+		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia3" value="1" />
     </path>
-    <!-- LAFITE-1080 chaofubang 20160202 end >-->
+
+    <!-- for use with leeco audio hal -->
+	<path name="audio-ull-playback-speaker smartpa">
+		<path name="audio-ull-playback smartpa" />
+    </path>
 
     <path name="audio-ull-playback headphones">
         <path name="audio-ull-playback" />
@@ -412,7 +415,6 @@
         <ctl name="AFE_PCM_RX Audio Mixer MultiMedia3" value="1" />
     </path>
 
-
     <path name="audio-ull-playback usb-headphones">
         <path name="audio-ull-playback afe-proxy" />
     </path>
@@ -426,16 +428,14 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia4" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
-    <path name="compress-offload-playback-speaker">
-	    <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia4" value="1" />
+	<path name="compress-offload-playback smartpa">
+		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia4" value="1" />
     </path>
 
-    <path name="compress-offload-playback-force-speaker">
-	    <path name="compress-offload-playback-speaker" />
-	    <path name="compress-offload-playback" />
+    <!-- for use with leeco audio hal -->
+	<path name="compress-offload-playback-speaker smartpa">
+		<path name="compress-offload-playback smartpa" />
     </path>
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
 
     <path name="compress-offload-playback speaker-protected">
         <path name="compress-offload-playback" />
@@ -466,11 +466,14 @@
         <ctl name="PRI_MI2S_RX Audio Mixer MultiMedia7" value="1" />
     </path>
 
-    <!-- < LAFITE-428 chaofubang 20160108 begin-->
-    <path name="compress-offload-playback2-speaker">
-        <ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia7" value="1" />
+	<path name="compress-offload-playback2 smartpa">
+		<ctl name="QUIN_MI2S_RX Audio Mixer MultiMedia7" value="1" />
     </path>
-    <!-- LAFITE-428 chaofubang 20160108 end >-->
+
+    <!-- for use with leeco audio hal -->
+	<path name="compress-offload-playback2-speaker smartpa">
+		<path name="compress-offload-playback2 smartpa" />
+    </path>
 
     <path name="compress-offload-playback2 bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia7" value="1" />
@@ -540,6 +543,7 @@
     <path name="audio-record capture-fm">
         <ctl name="MultiMedia1 Mixer INTERNAL_FM_TX" value="1" />
     </path>
+
     <path name="audio-record-compress">
         <!-- <ctl name="MultiMedia8 Mixer TERT_MI2S_TX" value="1" /> -->
     </path>
@@ -583,13 +587,11 @@
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <path name="voice-call speaker">
         <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer CSVoice" value="1" />
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
     </path>
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
 
     <path name="voice-call bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer CSVoice" value="1" />
@@ -615,13 +617,11 @@
         <ctl name="Voice2_Tx Mixer TERT_MI2S_TX_Voice2" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <path name="voice2-call speaker">
         <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer CSVoice" value="1" />
         <ctl name="Voice_Tx Mixer TERT_MI2S_TX_Voice" value="1" />
     </path>
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
 
     <path name="voice2-call bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer Voice2" value="1" />
@@ -645,29 +645,33 @@
     <path name="play-fm">
         <ctl name="Internal FM RX Volume" value="1" />
         <ctl name="PRI_MI2S_RX Port Mixer INTERNAL_FM_TX" value="1" />
-        <!-- <ctl name="MI2S_DL_HL Switch" value="1" /> -->
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
-    <path name="play-fm-speaker">
+    <path name="play-fm speaker">
         <ctl name="Internal FM RX Volume" value="1" />
         <ctl name="QUIN_MI2S_RX Port Mixer INTERNAL_FM_TX" value="1" />
         <ctl name="QUIN_MI2S_RX_DL_HL Switch" value="1" />
-        <!-- <ctl name="MI2S_DL_HL Switch" value="1" /> -->
     </path>
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
+
+    <!-- for use with leeco audio hal -->
+    <path name="play-fm-speaker">
+        <path name="play-fm speaker" />
+    </path>
 
     <path name="vowlan-call">
         <ctl name="PRI_MI2S_RX_Voice Mixer VoWLAN" value="1" />
         <ctl name="VoWLAN_Tx Mixer TERT_MI2S_TX_VoWLAN" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
-    <path name="vowlan-call-speaker">
+    <path name="vowlan-call speaker">
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoWLAN" value="1" />
         <ctl name="VoWLAN_Tx Mixer TERT_MI2S_TX_VoWLAN" value="1" />
     </path>
-    <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
+
+    <!-- for use with leeco audio hal -->
+    <path name="vowlan-call-speaker">
+        <path name="vowlan-call speaker" />
+    </path>
 
     <path name="vowlan-call hdmi">
         <ctl name="HDMI_RX_Voice Mixer VoWLAN" value="1" />
@@ -694,15 +698,12 @@
         <ctl name="VoiceMMode1_Tx Mixer TERT_MI2S_TX_MMode1" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20160107 begin-->
-    <!-- < LAFITE-1111 chaofubang 20160129 begin-->
+    <!-- for use with leeco audio hal -->
     <path name="voicemmode1-call-speaker">
         <ctl name="VOC_EXT_EC MUX" value="QUIN_MI2S_TX" />
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoiceMMode1" value="1" />
         <ctl name="VoiceMMode1_Tx Mixer TERT_MI2S_TX_MMode1" value="1" />
     </path>
-    <!-- LAFITE-1111 chaofubang 20160129 end >-->
-    <!-- LAFITE-67 chaofubang modify audio driver 20160107 end >-->
 
     <path name="voicemmode1-call bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer VoiceMMode1" value="1" />
@@ -746,6 +747,11 @@
 
     <path name="voicemmode2-call">
         <ctl name="PRI_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
+        <ctl name="VoiceMMode2_Tx Mixer TERT_MI2S_TX_MMode2" value="1" />
+    </path>
+
+    <path name="voicemmode2-call speaker">
+        <ctl name="QUIN_MI2S_RX_Voice Mixer VoiceMMode2" value="1" />
         <ctl name="VoiceMMode2_Tx Mixer TERT_MI2S_TX_MMode2" value="1" />
     </path>
 
@@ -801,6 +807,11 @@
     <path name="hfp-sco">
         <ctl name="PRI_MI2S_RX Port Mixer INTERNAL_BT_SCO_TX" value="1" />
         <!-- <ctl name="INTERNAL_BT_SCO_RX Audio Mixer MultiMedia6" value="1" /> -->
+        <ctl name="MultiMedia6 Mixer TERT_MI2S_TX" value="1" />
+        <ctl name="HFP_INT_UL_HL Switch" value="1" />
+    </path>
+
+    <path name="hfp-sco speaker">
         <ctl name="MultiMedia6 Mixer TERT_MI2S_TX" value="1" />
         <ctl name="HFP_INT_UL_HL Switch" value="1" />
     </path>
@@ -971,6 +982,11 @@
         <ctl name="VoLTE_Tx Mixer TERT_MI2S_TX_VoLTE" value="1" />
    </path>
 
+    <path name="volte-call speaker">
+        <ctl name="QUIN_MI2S_RX_Voice Mixer VoLTE" value="1" />
+        <ctl name="VoLTE_Tx Mixer TERT_MI2S_TX_VoLTE" value="1" />
+    </path>
+
     <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <path name="volte-call-speaker">
         <ctl name="QUIN_MI2S_RX_Voice Mixer VoLTE" value="1" />
@@ -1007,6 +1023,11 @@
         <ctl name="Voip_Tx Mixer TERT_MI2S_TX_Voip" value="1" />
     </path>
 
+    <path name="compress-voip-call speaker">
+        <ctl name="QUIN_MI2S_RX_Voice Mixer Voip" value="1" />
+        <ctl name="Voip_Tx Mixer TERT_MI2S_TX_Voip" value="1" />
+    </path>
+
     <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
     <path name="compress-voip-call-speaker">
         <ctl name="QUIN_MI2S_RX_Voice Mixer Voip" value="1" />
@@ -1040,11 +1061,16 @@
         <ctl name="QCHAT_Tx Mixer TERT_MI2S_TX_QCHAT" value="1" />
     </path>
 
-    <!-- < LAFITE-67 chaofubang modify audio driver 20151225 begin-->
-    <path name="qchat-call-speaker">
+    <path name="qchat-call speaker">
         <ctl name="QUIN_MI2S_RX_Voice Mixer QCHAT" value="1" />
         <ctl name="QCHAT_Tx Mixer TERT_MI2S_TX_QCHAT" value="1" />
     </path>
+
+    <!-- for use with leeco audio hal -->
+    <path name="qchat-call-speaker">
+        <path name="qchat-call speaker" />
+    </path>
+
     <!-- LAFITE-67 chaofubang modify audio driver 20151225 end >-->
     <path name="qchat-call bt-sco">
         <ctl name="INTERNAL_BT_SCO_RX_Voice Mixer QCHAT" value="1" />
