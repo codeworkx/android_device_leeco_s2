@@ -190,11 +190,12 @@ PRODUCT_PACKAGES += \
 
 # GPS
 PRODUCT_PACKAGES += \
-    gps.msm8952
+    gps.msm8952 \
+    libcurl
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/flp.conf:system/etc/configs/flp.conf \
-    $(LOCAL_PATH)/configs/gps.conf:system/etc/configs/gps.conf
+    $(LOCAL_PATH)/configs/flp.conf:system/etc/flp.conf \
+    $(LOCAL_PATH)/configs/gps.conf:system/etc/gps.conf
 
 # Media
 PRODUCT_COPY_FILES += \
